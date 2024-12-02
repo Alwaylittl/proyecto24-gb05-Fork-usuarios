@@ -20,7 +20,7 @@ from flask import jsonify
 # Variables globales para mantener el estado del usuario y el perfil actual
 usuario_logeado = None
 perfil_actual = None
-
+ERROR_SOLICITUD_NO_JSON = 'El contenido de la solicitud no es JSON'
 
 from flask import Response
 def login_usuario():
@@ -29,7 +29,7 @@ def login_usuario():
     global usuario_logeado, perfil_actual
     try:
         if not connexion.request.is_json:
-            return Response('El contenido de la solicitud no es JSON', status=400, content_type='text/plain; charset=utf-8')
+            return Response(ERROR_SOLICITUD_NO_JSON, status=400, content_type='text/plain; charset=utf-8')
 
         login_data = connexion.request.get_json()
         correo_electronico = login_data.get('correoElectronico')
@@ -54,7 +54,7 @@ def login_usuario():
 def registrar_usuario():
     """Registro de nuevo usuario."""
     if not connexion.request.is_json:
-        return Response('El contenido de la solicitud no es JSON', status=400, content_type='text/plain; charset=utf-8')
+        return Response(ERROR_SOLICITUD_NO_JSON, status=400, content_type='text/plain; charset=utf-8')
 
     usuario_data = connexion.request.get_json()
 
@@ -88,7 +88,7 @@ def agregar_metodo_pago():
     db = SessionLocal()
     try:
         if not connexion.request.is_json:
-            return 'El contenido de la solicitud no es JSON', 400
+            return ERROR_SOLICITUD_NO_JSON, 400
 
         metodo_pago_data = connexion.request.get_json()
         CRUD_metodosPago.agregar_metodo_pago(
@@ -115,7 +115,7 @@ def modificar_usuario():
             return Response('Usuario no autenticado', status=401, content_type='text/plain; charset=utf-8')
 
         if not connexion.request.is_json:
-            return Response('El contenido de la solicitud no es JSON', status=400, content_type='text/plain; charset=utf-8')
+            return Response(ERROR_SOLICITUD_NO_JSON, status=400, content_type='text/plain; charset=utf-8')
 
         usuario_data = connexion.request.get_json()
 
@@ -173,7 +173,7 @@ def crear_perfil():
     try:
         # Verificar si el contenido de la solicitud es JSON
         if not connexion.request.is_json:
-            return Response('El contenido de la solicitud no es JSON', status=400,
+            return Response(ERROR_SOLICITUD_NO_JSON, status=400,
                             content_type='text/plain; charset=utf-8')
 
         # Obtener datos del perfil desde la solicitud
@@ -241,7 +241,7 @@ def añadir_favorito():
     db = SessionLocal()
     try:
         if not connexion.request.is_json:
-            return Response('El contenido de la solicitud no es JSON', status=400, content_type='text/plain; charset=utf-8')
+            return Response(ERROR_SOLICITUD_NO_JSON, status=400, content_type='text/plain; charset=utf-8')
 
         favorito_data = connexion.request.get_json()
 
