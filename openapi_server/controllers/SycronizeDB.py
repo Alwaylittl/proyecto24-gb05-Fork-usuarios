@@ -151,7 +151,7 @@ def sync_tables(postgres_conn, oracle_conn):
     oracle_conn.commit()
     cursor.close()
 
-def syncronizeDB():
+def syncronizedb():
     postgres_conn = get_postgres_connection()
     oracle_conn = get_oracle_connection()
 
@@ -161,4 +161,4 @@ def syncronizeDB():
     oracle_conn.close()
 
 if __name__ == "__main__":
-    syncronizeDB()
+    syncronizedb()
